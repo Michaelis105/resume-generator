@@ -35,14 +35,22 @@ def create_resume():
     # --- CONDENSED CENTERED HEADER --- 
     name_p = doc.add_paragraph()
     name_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    name_p.paragraph_format.space_after = Pt(1)
     name_run = name_p.add_run("MICHAEL KEN LOUIE")
     name_run.bold = True
     name_run.font.size = Pt(28)
+    
 
-    info_p = doc.add_paragraph()
-    info_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    info_p.add_run("michael.louie10@gmail.com  |  540-645-1914  |  McLean, VA\n")
-    info_p.add_run("github.com/Michaelis105  |  linkedin.com/in/louiemichael")
+    contact_p = doc.add_paragraph()
+    contact_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    contact_p.paragraph_format.space_after = Pt(2)
+    contact_run = contact_p.add_run("✉ michael.louie10@gmail.com  | ✆ 540-645-1914  | 📍 McLean, VA")
+    contact_run.font.size = Pt(12)
+
+    link_p = doc.add_paragraph()
+    link_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    link_run = link_p.add_run("</> github.com/Michaelis105  | [in] linkedin.com/in/louiemichael")
+    link_run.font.size = Pt(12)    
 
     # --- SECTION: WORK EXPERIENCE ---
     hw = doc.add_paragraph("WORK EXPERIENCE")
@@ -52,7 +60,7 @@ def create_resume():
 
     def add_job(co, title, loc, dates, bullets, level2_range=None):
         p1 = doc.add_paragraph()
-        p1.paragraph_format.space_before = Pt(8)
+        p1.paragraph_format.space_before = Pt(10)
         p1.paragraph_format.tab_stops.add_tab_stop(Inches(8.0), WD_TAB_ALIGNMENT.RIGHT)
         p1.add_run(co).bold = True
         p1.add_run(f"\t{dates}")
@@ -96,9 +104,20 @@ def create_resume():
         "Built MSI to automate ATM software platform lifecycle management, reducing per kiosk downtime by 60%."
     ]
     add_job("Capital One Financial", "Bank Tech – Consumer Self-Servicing, Lead Software Engineer", "Tysons, VA", "July 2019 – Present", c1_bullets, level2_range=(1,6))
-    add_job("Bloomberg Industry Group", "Subscription Management and Customer Support Platform, Software Engineer", "Arlington, VA", "August 2018 – July 2019", ["Improved platform observability by implementing health check web service using Spring, Vue.js, and Vuetify."])
-    add_job("Verisign, Inc.", "Consolidated Top-Level Domain - Infrastructure Services, Software Engineer I-II", "Reston, VA", "February 2017 – August 2018", ["Optimized DotGov portal domain management web service in collaboration with customer service and GSA users."])
-    add_job("Lockheed Martin", "Acoustic Rapid COTS Insertion System Services, Software Engineer Associate", "Manassas, VA", "June 2016 – February 2017", [])
+
+    bloomberg_bullets = ["Minimized customers' secure access outage via preemptive SAML certificate expiration notifications detection.", "Improved platform observability by implementing health check web service using Spring, Vue.js, and Vuetify."]
+    add_job("Bloomberg Industry Group", "Subscription Management and Customer Support Platform, Software Engineer", "Arlington, VA", "August 2018 – July 2019", bloomberg_bullets)
+    
+    vs_bullets = [
+        "Optimized DotGov portal domain management web service in collaboration with customer service and GSA users.",
+        "Developed internal code dependency analysis reporting tool to analyze and report project security vulnerabilities."
+    ]
+    add_job("Verisign, Inc.", "Consolidated Top-Level Domain - Infrastructure Services, Software Engineer I-II", "Reston, VA", "February 2017 – August 2018", vs_bullets)
+    
+    lm_bullets = [
+        "Enabled sonar applications task clustering scaling and management via Mesos/Marathon."
+    ]
+    add_job("Lockheed Martin", "Acoustic Rapid COTS Insertion System Services, Software Engineer Associate", "Manassas, VA", "June 2016 – February 2017", lm_bullets)
 
     # --- SECTION: TECHNICAL EXPERTISE ---
     ht = doc.add_paragraph("TECHNICAL EXPERTISE")
@@ -152,10 +171,6 @@ def create_resume():
     pe1_sub.add_run("M.S. in Computer Science (Computing Systems)").italic = True
     pe1_sub.add_run("\tAtlanta, GA")
     pe1_sub.paragraph_format.space_after = Pt(4)
-    p = doc.add_paragraph(f"Courser – Academic Course Registration System")
-    for b in ["Simplifying course registration via optimal preference scheduling algorithm.", "Coursework includes machine learning, data-visual analytics, and algorithms."]:
-        p = doc.add_paragraph(f"• {b}")
-        p.paragraph_format.left_indent = Inches(0.3)
 
     # Virginia Tech 
     pe2 = doc.add_paragraph()
@@ -168,10 +183,6 @@ def create_resume():
     pe2_sub.add_run("B.S. in Computer Science").italic = True
     pe2_sub.add_run("\tBlacksburg, VA")
     pe2_sub.paragraph_format.space_after = Pt(4)
-    p_vt = doc.add_paragraph("1st Place Faculty Choice “Best” Capstone, Undergraduate Research Symposium")
-    p_vt = doc.add_paragraph("\"Neuroevolution of Augmenting Topologies and Machine Learning – Finite Solution Spaces\"")
-    p_vt = doc.add_paragraph("• Applied machine learning algorithm NEAT and studied its effects on training AI utilizing Java and AWS EC2.")
-    p_vt.paragraph_format.left_indent = Inches(0.3)
 
     doc.save('resume.docx')
 
