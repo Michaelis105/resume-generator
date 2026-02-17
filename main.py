@@ -94,22 +94,24 @@ def create_resume():
     c1_bullets = [
         "Tech Lead launching U.S. industry first self-service cashier’s check kiosk.",
         ("Patent", True, "(US11636464B2) granted on innovative kiosk experience."),
-        "Supporting high-stakes transactions over $20 million in customer cashier’s checks across money markets.",
-        "Scaling serverless microservice stack (React UI, RESTful Node.js API, NoSQL), 99.9% uptime.",
+        "Supporting high-stakes transactions totaling >$20 million in customer cashier’s checks across money markets.",
+        "Scaling AWS serverless microservice stack via Terraform-like infra-as-code to production, 99.9% uptime.",
+        "Introducing standard React, RESTful Node.js API, NoSQL tech stack across multiple self-service platforms.",#
         "Steering engineers via pair programming, code reviews, and resiliency on-call playbooks.",
+        "Conveying technical intent with product owners and engineers via architecture/dataflow/API design diagrams.",
         "Centralizing transaction and kiosk state at single source data lake via Kafka for real-time monitoring.",
         "Reducing kiosk deployment times by 80% by pioneering fleet management pub-sub operation code mechanism.",
-        "Tech Lead for green-field self-service instant payment issuance card kiosk.",
-        "Designed and developed ATM fleet managing/monitoring system serving real-time operations/auditing.",
-        "Built MSI to automate ATM software platform lifecycle management, reducing per kiosk downtime by 60%."
+        "Tech Lead for owning technical direction of green-field self-service instant payment issuance card kiosk.",
+        "Designing and developing ATM fleet managing/monitoring distributed system serving real-time operations/auditing.",
+        "Building MSI to automate ATM software platform lifecycle management, reducing per kiosk downtime by 60%."
     ]
-    add_job("Capital One Financial", "Bank Tech – Consumer Self-Servicing, Lead Software Engineer", "Tysons, VA", "July 2019 – Present", c1_bullets, level2_range=(1,6))
+    add_job("Capital One Financial", "Bank Tech – Consumer Self-Servicing, Lead Software Engineer", "Tysons, VA", "July 2019 – Present", c1_bullets, level2_range=(1,7))
 
     bloomberg_bullets = ["Minimized customers' secure access outage via preemptive SAML certificate expiration notifications detection.", "Improved platform observability by implementing health check web service using Spring, Vue.js, and Vuetify."]
     add_job("Bloomberg Industry Group", "Subscription Management and Customer Support Platform, Software Engineer", "Arlington, VA", "August 2018 – July 2019", bloomberg_bullets)
     
     vs_bullets = [
-        "Optimized DotGov portal domain management web service in collaboration with customer service and GSA users.",
+        "Optimized DotGov portal domain management web service UX collaborating with customer service and GSA users.",
         "Developed internal code dependency analysis reporting tool to analyze and report project security vulnerabilities."
     ]
     add_job("Verisign, Inc.", "Consolidated Top-Level Domain - Infrastructure Services, Software Engineer I-II", "Reston, VA", "February 2017 – August 2018", vs_bullets)
@@ -127,12 +129,12 @@ def create_resume():
     add_section_underline(ht)
 
     skills = [
-        ("Languages & Core Tech", "Python + Flask, Node.js + Express, Bash, Shell Scripting, Typescript/JavaScript "),
-        ("Frontend", "React / VueJS, HTML / CSS "),
-        ("Cloud & Infrastructure", "Amazon Web Services (AWS), Unix / Linux, Docker "),
-        ("Data Engineering", "SQL / NoSQL, PostgreSQL, Snowflake, Kafka "),
-        ("Observability/SRE Tools", "Splunk, New Relic, Cloudwatch, PagerDuty, Git / GitHub "),
-        ("AI-Assisted Development", "Windsurf / Copilot / Gemini ")
+        ("Languages & Core Tech", "Python + Flask, Node.js + Express, Bash, Shell Scripting, Typescript/JavaScript"),
+        ("Frontend", "React / VueJS, HTML / CSS"),
+        ("Cloud & Infrastructure", "Amazon Web Services (AWS), Unix / Linux, Docker, Terraform"),
+        ("Data Engineering", "SQL / NoSQL, MySQL, PostgreSQL, Snowflake, Kafka"),
+        ("Observability/SRE Tools", "Splunk, New Relic, Cloudwatch, PagerDuty, Git / GitHub"),
+        ("AI-Assisted Development", "Windsurf / Copilot / Gemini")
     ]
     for skill in skills:
         p = doc.add_paragraph()
@@ -184,6 +186,6 @@ def create_resume():
     pe2_sub.add_run("\tBlacksburg, VA")
     pe2_sub.paragraph_format.space_after = Pt(4)
 
-    doc.save('resume.docx')
+    doc.save('michael-louie-resume.docx')
 
 create_resume()
