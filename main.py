@@ -151,7 +151,7 @@ def create_resume():
     hc.paragraph_format.space_after = Pt(8)
     add_section_underline(hc)
     
-    certs = ["AWS Certified Developer Associate and Cloud Practitioner", "EMC Information Storage Associate", "CompTIA Network+ Certification N10-006"]
+    certs = ["AWS Certified Developer Associate and Cloud Practitioner", "AWS Certified Generative AI Developer – Professional and Solutions Architect (scheduled Q2 2026)", "CompTIA Network+ Certification N10-006"]
     for cert in certs:
         p = doc.add_paragraph(f"• {cert}")
         p.paragraph_format.left_indent = Inches(0.3)
