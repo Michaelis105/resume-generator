@@ -240,7 +240,7 @@ def create_resume():
     c1_lead_bullets = [
         "Tech Lead launching U.S.-first patented self-service cashier’s check kiosk through nationwide roll-out.",
         "Supporting >$20 million in high-stakes transactions via customer cashier’s checks across money markets.",
-        "Pruning 30% duplicate work via standardized MERN serverless tech stack across multiple self-service platforms.",
+        "Pruning 30% duplicate work via standardized MERN serverless AWS tech stack for many self-service platforms.",
         "Steering team of seven engineers via pair programming, code reviews, and resiliency on-call playbooks.",
         "Conveying technical intent with product, engineers, and designers via architecture/dataflow/API design diagrams.",
         "Tech Lead for owning technical direction of green-field self-service instant payment issuance card kiosk.",
@@ -256,7 +256,7 @@ def create_resume():
 
     # Capital One 
     c1_sa_bullets = [
-        "Developing ATM fleet managing/monitoring distributed system serving real-time operations/auditing.",
+        "Developing ATM fleet managing/monitoring distributed cloud infrastructure serving real-time operations/auditing.",
         "Building MSI to streamline ATM software platform lifecycle management, reducing per kiosk downtime by 60%.",
     ]
 
