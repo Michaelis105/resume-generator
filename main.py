@@ -154,7 +154,7 @@ def create_resume():
     # --- SECTION: SUMMARY ---
     add_section_heading("SUMMARY")
 
-    summary_text = "Full-stack software engineer with nearly 10 years of developing resilient, distributed AWS cloud systems in heavily-regulated environments at scale. Proven track record of steering engineering teams in building patented self-service banking technology supporting over $20 million in transactions and intelligent fleet management service overseeing 1000s of customer-facing financial devices. Combining deep full-stack expertise with the latest generative AI engineering technologies."
+    summary_text = "Full-stack software engineer with nearly 10 years of developing resilient, distributed, and stable AWS cloud systems in heavily-regulated environments at scale. Proven track record of steering engineering teams in building patented self-service banking technology supporting over $20 million in transactions and intelligent fleet management service overseeing 1000s of customer-facing financial devices. Combining deep full-stack expertise with the latest generative AI engineering technologies."
     summary_p1 = doc.add_paragraph(summary_text)
     summary_p1.paragraph_format.space_before = Pt(10)
     summary_p1.paragraph_format.line_spacing = 1.15
@@ -164,11 +164,11 @@ def create_resume():
 
     skills = [
         ("Languages & Core Tech", "Python + Flask, Node.js + Express, Bash, Java + Spring, Typescript"),
-        ("Frontend", "React, Vue, HTML, CSS, JavaScript"),
+        ("Frontend", "React, Vue, HTML, CSS, JavaScript, Electron"),
         ("Cloud & Infrastructure", "Amazon Web Services (AWS), Unix, Linux, Docker, Terraform, Git, GitHub"),
         ("Data Engineering", "SQL, NoSQL, MySQL, PostgreSQL, Snowflake, Kafka"),
         ("Observability/SRE", "Splunk, New Relic, Cloudwatch, PagerDuty, Playbooks, Technical Documentation"),
-        ("Testing", "Jest, Cypress, Cucumber"),
+        ("Unit, Acceptance, Contract Testing", "Jest, Cypress, Cucumber"),
         ("Architecture/System Design", "RESTful API, Distributed Systems, Event-Driven, Real-time, Microservices"),
         ("Leadership/Team Management", "Agile, Scrum, Cross-functional Team Coordination, Presentations All Audiences"),
         ("Growth", "Patent Process, Root-cause-analysis, Post-Mortems, Mentoring, Hackathons, Interviewing"),
