@@ -308,7 +308,7 @@ def create_resume():
     pe1.paragraph_format.space_before = Pt(8)
     pe1.paragraph_format.tab_stops.add_tab_stop(Inches(8.0), WD_TAB_ALIGNMENT.RIGHT)
     pe1.add_run("Georgia Institute of Technology").bold = True
-    pe1.add_run("\tSpring 2021")
+    pe1.add_run("\tMay 2021")
     pe1_sub = doc.add_paragraph()
     pe1_sub.paragraph_format.tab_stops.add_tab_stop(Inches(8.0), WD_TAB_ALIGNMENT.RIGHT)
     pe1_sub.add_run("M.S. in Computer Science (Computing Systems)").italic = True
