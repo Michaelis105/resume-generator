@@ -170,18 +170,22 @@ def create_resume():
         ("Observability/SRE", "Splunk, New Relic, Cloudwatch, PagerDuty, Playbooks, Technical Documentation"),
         ("Unit, Acceptance, Contract Testing", "Jest, Cypress, Cucumber"),
         ("Architecture/System Design", "RESTful API, Distributed Systems, Event-Driven, Real-time, Microservices"),
-        ("Leadership/Team Management", "Agile, Scrum, Cross-functional Team Coordination, Presentations All Audiences"),
+        ("Leadership/Team Management", "Agile, Scrum, Cross-functional Team Coordination, Presentations"),
         ("Growth", "Patent Process, Root-cause-analysis, Post-Mortems, Mentoring, Hackathons, Interviewing"),
         ("Generative AI Engineering", "Ollama, LangChain, ChromaDB, Windsurf, Copilot, Gemini"),
-        ("Others", "3D Printing, Computer Aided Design (CAD), OnShape"),
     ]
     for skill in skills:
         p = doc.add_paragraph()
         category, items = skill
-        run = p.add_run(f"• {category}")
+        run = p.add_run(f"•\t{category}")
         run.bold = True
         p.add_run(f": {items}")
-        p.paragraph_format.left_indent = Inches(0.2)
+
+        
+        base_indent = 0.35
+        p.paragraph_format.left_indent = Inches(base_indent) 
+        p.paragraph_format.first_line_indent = Inches(-0.15)
+        p.paragraph_format.tab_stops.add_tab_stop(Inches(base_indent))
         p.paragraph_format.space_before = Pt(4)
         p.paragraph_format.space_after = Pt(4)
 
@@ -211,22 +215,26 @@ def create_resume():
         title_run.font.size = Pt(11)
         if dates:
             date_run = p2.add_run(f"\t{dates}")
-            date_run.font.size = Pt(11)
-        
+            date_run.font.size = Pt(11)    
         for idx, b in enumerate(bullets):
             bp = doc.add_paragraph()
+
+            base_indent = 0.25
+            bp.paragraph_format.left_indent = Inches(base_indent) 
+            bp.paragraph_format.tab_stops.add_tab_stop(Inches(base_indent))
+
             # Handle both plain strings and tuples with formatting
             if isinstance(b, tuple):
                 bold_text, is_bold, rest = b
-                run = bp.add_run(f"• ")
+                run = bp.add_run(f"•\t")
                 run = bp.add_run(f"{bold_text}")
                 run.bold = is_bold
                 bp.add_run(f" {rest}")
             else:
-                bp.add_run(f"• {b}")
+                bp.add_run(f"•\t{b}")
 
-            bp.paragraph_format.space_before = Pt(4)
-            bp.paragraph_format.space_after = Pt(4)
+            bp.paragraph_format.space_before = Pt(2)
+            bp.paragraph_format.space_after = Pt(2)
 
             # Indenting bullets slightly from the left margin
             if level2_range and level2_range[0] <= idx <= level2_range[1]:
@@ -238,21 +246,28 @@ def create_resume():
 
     # Capital One 
     c1_lead_bullets = [
-        "Tech Lead launching U.S.-first patented self-service cashier’s check kiosk through nationwide roll-out.",
-        "Supporting >$20 million in high-stakes transactions via customer cashier’s checks across money markets.",
-        "Pruning 30% duplicate work via standardized MERN serverless AWS tech stack for many self-service platforms.",
-        "Steering team of seven engineers via pair programming, code reviews, and resiliency on-call playbooks.",
-        "Conveying technical intent with product, engineers, and designers via architecture/dataflow/API design diagrams.",
+        "Tech Lead launching U.S.-first patented self-service cashier’s check kiosk via React + Node.js Electron redirecting check information from serverless backend to redirect to printer and presenting controller.",
+        "Supporting >$20 million in high-stakes transactions via customer cashier’s checks across money markets nation-wide integrating anti-fraud business check engines, FIS system of records, and automated reconciliation.",
+        "Standardizing self-service MERN serverless AWS tech stack avoiding 30% duplicate work tracking common transactions/kiosk states in DynamoDB tables, Lambda transaction handling, and money movement APIs.",
+        "Steering team of seven engineers via pair programming, code reviews, and resiliency on-call PagerDuty playbooks.",
+        "Conveying technical intent with product, engineers, and designers via architecture/dataflow/API design diagrams and technical intent agile refinements.",
         "Tech Lead for owning technical direction of green-field self-service instant payment issuance card kiosk.",
         "Engineering a LangChain and ChromaDB RAG-based prototype streamlining bank policy/procedure research.",
     ]
 
+    add_company_heading("Capital One Financial")
+    add_job("Lead Software Engineer – Bank Tech, Consumer Self-Servicing", "August 2024 – Present", c1_lead_bullets)
+
     # Capital One 
     c1_pa_bullets = [
-        "Minimizing manual cloud deployments and version drift via Terraform-like infra-as-code managed CICD changes.",
-        "Centralizing transaction and kiosk state at single source data lake via Kafka for real-time monitoring.",
-        "Reducing kiosk deployment times by 80% by pioneering fleet management pub-sub operation code mechanism.",
+        "Minimizing manual cloud deployments and version drift via Terraform infra-as-code managed CICD changes.",
+        "Centralizing transaction and kiosk state at single source Snowflake via Kafka for real-time monitoring.",
+        "Reducing kiosk deployment times by 80% by pioneering fleet management pub-sub operation code mechanism over RESTful API with reviewed, simplified action desired state in JSON.",
     ]
+
+    add_page_break()
+
+    add_job("Senior Software Engineer – Bank Tech, Associate In-Person Experience", "July 2021 – August 2024", c1_pa_bullets)
 
     # Capital One 
     c1_sa_bullets = [
@@ -260,9 +275,6 @@ def create_resume():
         "Building MSI to streamline ATM software platform lifecycle management, reducing per kiosk downtime by 60%.",
     ]
 
-    add_company_heading("Capital One Financial")
-    add_job("Lead Software Engineer – Bank Tech, Consumer Self-Servicing", "August 2024 – Present", c1_lead_bullets)
-    add_job("Senior Software Engineer – Bank Tech, Associate In-Person Experience", "July 2021 – August 2024", c1_pa_bullets)
     add_job("Software Engineer – Retail Bank Tech, Digital Customer Experience", "July 2019 – July 2021", c1_sa_bullets)
 
     bloomberg_bullets = ["Decreased customer secure access outages by 10% via preemptive SAML certificate expiration notifications.",]
@@ -276,7 +288,7 @@ def create_resume():
     add_company_heading("Verisign, Inc.", "February 2017 – August 2018")
     add_job("Software Engineer I-II – Consolidated Top-Level Domain, Infrastructure Services", None, vs_bullets)
     
-    lm_bullets = ["Modernized submarine sonar applications stack via integrating scaling and management Mesos/Marathon COTS.", "Introduced Docker containerization for hosting submarine applications."]
+    lm_bullets = ["Modernized submarine sonar applications stack integrating scaling and management Mesos/Marathon COTS.", "Introduced Docker containerization for hosting submarine applications."]
     add_company_heading("Lockheed Martin", "June 2016 – February 2017")
     add_job("Software Engineer Associate – Acoustic Rapid COTS Insertion System Services", None, lm_bullets)
 
@@ -285,20 +297,22 @@ def create_resume():
     
     patents = ["Systems and Methods for Securely Generating and Printing a Document (US20220414641A1)", "Graphical User Interface for Centralized Register Device Management and Monitoring (Notice of Allowance)"]
     for patent in patents:
-        p = doc.add_paragraph(f"• {patent}")
+        p = doc.add_paragraph(f"•\t {patent}")
         p.paragraph_format.left_indent = Inches(0.2)
-        p.paragraph_format.space_before = Pt(4)
-        p.paragraph_format.space_after = Pt(4)
+        p.paragraph_format.tab_stops.add_tab_stop(Inches(base_indent))
+        p.paragraph_format.space_before = Pt(2)
+        p.paragraph_format.space_after = Pt(2)
 
     # --- SECTION: CERTIFICATIONS --- 
     add_section_heading("CERTIFICATIONS")
     
-    certs = ["AWS Certified Developer Associate and Cloud Practitioner", "AWS Certified Generative AI Developer – Professional and Solutions Architect (scheduled Q2 2026)", "CompTIA Network+ Certification N10-006"]
+    certs = ["AWS Certified Developer Associate and Cloud Practitioner", "AWS Certified Generative AI Developer – Professional and Solutions Architect (scheduled Q3 2026)", "CompTIA Network+ Certification N10-006"]
     for cert in certs:
-        p = doc.add_paragraph(f"• {cert}")
+        p = doc.add_paragraph(f"•\t {cert}")
         p.paragraph_format.left_indent = Inches(0.2)
-        p.paragraph_format.space_before = Pt(4)
-        p.paragraph_format.space_after = Pt(4)
+        p.paragraph_format.tab_stops.add_tab_stop(Inches(base_indent))
+        p.paragraph_format.space_before = Pt(2)
+        p.paragraph_format.space_after = Pt(2)
 
     # --- SECTION: EDUCATION --- 
     add_section_heading("EDUCATION")
