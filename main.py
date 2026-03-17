@@ -131,7 +131,9 @@ def create_resume():
 
     def add_summary_section():
         add_section_heading("SUMMARY")
-        summary_text = "Full-stack lead software engineer with nearly 10 years of developing resilient, distributed, and stable AWS cloud systems in heavily-regulated environments at scale. Proven track record of steering engineering teams and partnering with product/design to influence and build patented self-service banking technology supporting over $20 million in transactions and intelligent fleet management service overseeing 1000s of reliable customer-facing financial devices. Combining deep full-stack expertise with the latest generative AI engineering technologies."
+        summary_text = "Full-stack lead software engineer with nearly 10 years of developing resilient, distributed, and stable AWS cloud systems in heavily-regulated environments at scale. " \
+        "Proven track record of steering engineering teams and partnering with product/design to influence and build patented self-service banking technology supporting over $20 million in transactions and intelligent fleet management service overseeing 1000s of reliable customer-facing financial devices. " \
+        "Combining deep full-stack expertise with the latest generative AI engineering technologies."
         summary_p1 = doc.add_paragraph(summary_text)
         summary_p1.paragraph_format.space_before = Pt(10)
         summary_p1.paragraph_format.line_spacing = 1.15
@@ -149,7 +151,7 @@ def create_resume():
             ("Unit, Acceptance, Contract Testing", "Jest, Cypress, Cucumber"),
             ("Architecture/System Design", "RESTful API, Distributed Systems, Event-Driven, Real-time, Microservices"),
             ("Leadership/Team Management", "Agile, Scrum, Cross-functional Team Coordination, Presentations"),
-            ("Growth", "Patent Process, Root-cause-analysis, Post-Mortems, Mentoring, Hackathons, Interviewing"),
+            #("Growth", "Patent Process, Root-cause-analysis, Post-Mortems, Mentoring, Hackathons, Interviewing"),
             ("Generative AI Engineering", "Ollama, LangChain, ChromaDB, Windsurf, Copilot, Gemini"),
             #("Others", mini_skills),
         ]
@@ -234,9 +236,8 @@ def create_resume():
         # Capital One 
         c1_lead_bullets = [
             "Spearheading nation-wide launch of U.S.-first patented self-service cashier’s check kiosk leveraging AWS Lambda, Node.js + React Electron to orchestrate secure, QR-initiated check issuance from mobile devices.",
-            "Engineering a resilient $20M+ workflow for high-stakes customer cashier’s checks transactions leveraging AWS Lambda to scale real-time AML checking, FIS system of records, and automated reconciliation microservices.",
-            "Avoiding 30% redundant development by architecting a standardized AWS severless React, Node.js, and DynamoDB stack for unified cache state management, transaction processing, and anti-fraud measures.",
-            "Steering engineering excellence for 7-engineer team, systematizing code reviews and testing for increased feature delivery velocity and writing on-call PagerDuty debug playbooks/dashboards to minimize kiosk MTTR.",
+            "Engineering a resilient $20M+ workflow for high-stakes customer cashier’s check transactions leveraging AWS Lambda to scale real-time AML checking, FIS system of records, and automated reconciliation microservices.",
+            "Steering engineering excellence for 7-engineer team, systematizing code reviews and testing for increased feature delivery velocity and writing on-call PagerDuty debug playbooks/dashboards/RCA to lower kiosk MTTR.",
             "Unifying technical vision across product, design, and engineering by crafting high-fidelity dataflow and API contracts, reducing implementation ambiguity and growing development velocity via focused Agile refinements.",
             "Conceptualizing the green-field architecture of a self-service card issuance kiosk, designing secure AWS serverless workflows to orchestrate real-time EMV chip encoding and payment activation.",
             "Automating regulatory research using LangChain and ChromaDB to transform unstructured policies into semantically searchable knowledge base tool resulting in reduced manual discovery time.",
@@ -247,12 +248,13 @@ def create_resume():
 
         # Capital One 
         c1_pa_bullets = [
+            "Avoiding 30% redundant development by architecting a standardized AWS severless React, Node.js, and DynamoDB stack for unified cache state management, transaction processing, and anti-fraud measures.",
             "Eliminated manual cloud change errors and version drift by architecting immutable infrastructure-as-code (IaC) via Terraform, automating CI/CD pipelines to ensure environmental parity.",
             "Aggregated real-time transaction telemetry and kiosk states into streamed source Snowflake using Kafka, establishing centralized observability and proactive monitoring across kiosk fleet and financial instruments.",
             "Reduced kiosk deployment times by 80% by pioneering extensible fleet management asynchronous pub-sub operation code SQS-SNS mechanism over RESTful API with reviewed, simplified action desired state in JSON.",
+            "Mentored three junior software engineers via knowledge-sharing resulting in two promotions.",
+            "Refined software engineering hiring standard via coding and system architectural design interviewing.",
         ]
-
-        add_page_break()
 
         add_job("Senior Software Engineer – Bank Tech, Associate In-Person Experience", "July 2021 – August 2024", c1_pa_bullets)
 
@@ -293,7 +295,9 @@ def create_resume():
     def add_certifications_section():
         add_section_heading("CERTIFICATIONS")
         base_indent = 0.35
-        certs = ["AWS Certified Developer Associate and Cloud Practitioner", "AWS Certified Generative AI Developer – Professional and Solutions Architect (expected Q3 2026)", "CompTIA Network+ Certification N10-006"]
+        certs = ["AWS Certified Developer Associate and Cloud Practitioner", 
+                 #"AWS Certified Generative AI Developer – Professional and Solutions Architect (expected Q3 2026)",
+                  "CompTIA Network+ Certification N10-006"]
         for cert in certs:
             p = doc.add_paragraph(f"•\t {cert}")
             p.paragraph_format.left_indent = Inches(0.2)
@@ -357,11 +361,11 @@ def create_resume():
     # --- SECTION: SUMMARY ---
     add_summary_section()
 
-    # --- SECTION: TECHNICAL EXPERTISE ---
-    add_technical_expertise_section()
-    
     # --- SECTION: PROFESSIONAL WORK EXPERIENCE ---
     add_work_experience_section()
+
+    # --- SECTION: TECHNICAL EXPERTISE ---
+    add_technical_expertise_section()
 
     # --- SECTION: PATENTS --- 
     add_patents_section()
