@@ -154,7 +154,7 @@ def create_resume():
     # --- SECTION: SUMMARY ---
     add_section_heading("SUMMARY")
 
-    summary_text = "Full-stack software engineer with nearly 10 years of developing resilient, distributed, and stable AWS cloud systems in heavily-regulated environments at scale. Proven track record of steering engineering teams in building patented self-service banking technology supporting over $20 million in transactions and intelligent fleet management service overseeing 1000s of customer-facing financial devices. Combining deep full-stack expertise with the latest generative AI engineering technologies."
+    summary_text = "Full-stack lead software engineer with nearly 10 years of developing resilient, distributed, and stable AWS cloud systems in heavily-regulated environments at scale. Proven track record of steering engineering teams and partnering with product/design to influence and build patented self-service banking technology supporting over $20 million in transactions and intelligent fleet management service overseeing 1000s of reliable customer-facing financial devices. Combining deep full-stack expertise with the latest generative AI engineering technologies."
     summary_p1 = doc.add_paragraph(summary_text)
     summary_p1.paragraph_format.space_before = Pt(10)
     summary_p1.paragraph_format.line_spacing = 1.15
@@ -165,30 +165,39 @@ def create_resume():
     skills = [
         ("Languages & Core Tech", "Python + Flask, Node.js + Express, Bash, Java + Spring, Typescript"),
         ("Frontend", "React, Vue, HTML, CSS, JavaScript, Electron"),
-        ("Cloud & Infrastructure", "Amazon Web Services (AWS), Unix, Linux, Docker, Terraform, Git, GitHub"),
-        ("Data Engineering", "SQL, NoSQL, MySQL, PostgreSQL, Snowflake, Kafka"),
+        ("Cloud & Infrastructure", "Amazon Web Services (AWS), Unix, Linux, Docker, Container, Terraform, Git, GitHub"),
+        ("Data Engineering", "SQL relational, NoSQL non-relational, MySQL, PostgreSQL, Snowflake, Kafka, Modeling"),
         ("Observability/SRE", "Splunk, New Relic, Cloudwatch, PagerDuty, Playbooks, Technical Documentation"),
         ("Unit, Acceptance, Contract Testing", "Jest, Cypress, Cucumber"),
         ("Architecture/System Design", "RESTful API, Distributed Systems, Event-Driven, Real-time, Microservices"),
         ("Leadership/Team Management", "Agile, Scrum, Cross-functional Team Coordination, Presentations"),
         ("Growth", "Patent Process, Root-cause-analysis, Post-Mortems, Mentoring, Hackathons, Interviewing"),
         ("Generative AI Engineering", "Ollama, LangChain, ChromaDB, Windsurf, Copilot, Gemini"),
+        #("Others", mini_skills),
     ]
     for skill in skills:
         p = doc.add_paragraph()
         category, items = skill
+        '''
+        if category == "Others":
+            mini_run = p.add_run(f"•\t{category}")
+            mini.paragraph_format.space_before = Pt(0)
+            mini.paragraph_format.space_after = Pt(0)
+            mini_run = mini.add_run(", ".join(mini_skills))
+            mini_run.font.size = Pt(2)  # effectively invisible text for keyword optimization
+            mini_run.font.color.rgb = RGBColor(255, 255, 255)
+            continue
+        '''
         run = p.add_run(f"•\t{category}")
         run.bold = True
         p.add_run(f": {items}")
-
-        
         base_indent = 0.35
         p.paragraph_format.left_indent = Inches(base_indent) 
         p.paragraph_format.first_line_indent = Inches(-0.15)
         p.paragraph_format.tab_stops.add_tab_stop(Inches(base_indent))
         p.paragraph_format.space_before = Pt(4)
         p.paragraph_format.space_after = Pt(4)
-
+    
     # --- SECTION: PROFESSIONAL WORK EXPERIENCE ---
     add_section_heading("PROFESSIONAL WORK EXPERIENCE")
 
@@ -233,8 +242,8 @@ def create_resume():
             else:
                 bp.add_run(f"•\t{b}")
 
-            bp.paragraph_format.space_before = Pt(2)
-            bp.paragraph_format.space_after = Pt(2)
+            bp.paragraph_format.space_before = Pt(3)
+            bp.paragraph_format.space_after = Pt(3)
 
             # Indenting bullets slightly from the left margin
             if level2_range and level2_range[0] <= idx <= level2_range[1]:
@@ -246,13 +255,13 @@ def create_resume():
 
     # Capital One 
     c1_lead_bullets = [
-        "Tech Lead launching U.S.-first patented self-service cashier’s check kiosk via React + Node.js Electron redirecting check information from serverless backend to redirect to printer and presenting controller.",
-        "Supporting >$20 million in high-stakes transactions via customer cashier’s checks across money markets nation-wide integrating anti-fraud business check engines, FIS system of records, and automated reconciliation.",
-        "Standardizing self-service MERN serverless AWS tech stack avoiding 30% duplicate work tracking common transactions/kiosk states in DynamoDB tables, Lambda transaction handling, and money movement APIs.",
-        "Steering team of seven engineers via pair programming, code reviews, and resiliency on-call PagerDuty playbooks.",
-        "Conveying technical intent with product, engineers, and designers via architecture/dataflow/API design diagrams and technical intent agile refinements.",
-        "Tech Lead for owning technical direction of green-field self-service instant payment issuance card kiosk.",
-        "Engineering a LangChain and ChromaDB RAG-based prototype streamlining bank policy/procedure research.",
+        "Spearheading nation-wide launch of U.S.-first patented self-service cashier’s check kiosk leveraging AWS Lambda, Node.js + React Electron to orchestrate secure, QR-initiated check issuance from mobile devices.",
+        "Engineering a resilient $20M+ workflow for high-stakes customer cashier’s checks transactions leveraging AWS Lambda to scale real-time AML checking, FIS system of records, and automated reconciliation microservices.",
+        "Avoiding 30% redundant development by architecting a standardized AWS severless React, Node.js, and DynamoDB stack for unified cache state management, transaction processing, and anti-fraud measures.",
+        "Steering engineering excellence for 7-engineer team, systematizing code reviews and testing for increased feature delivery velocity and writing on-call PagerDuty debug playbooks/dashboards to minimize kiosk MTTR.",
+        "Unifying technical vision across product, design, and engineering by crafting high-fidelity dataflow and API contracts, reducing implementation ambiguity and growing development velocity via focused Agile refinements.",
+        "Conceptualizing the green-field architecture of a self-service card issuance kiosk, designing secure AWS serverless workflows to orchestrate real-time EMV chip encoding and payment activation.",
+        "Automating regulatory research using LangChain and ChromaDB to transform unstructured policies into semantically searchable knowledge base tool resulting in reduced manual discovery time.",
     ]
 
     add_company_heading("Capital One Financial")
@@ -260,9 +269,9 @@ def create_resume():
 
     # Capital One 
     c1_pa_bullets = [
-        "Minimizing manual cloud deployments and version drift via Terraform infra-as-code managed CICD changes.",
-        "Centralizing transaction and kiosk state at single source Snowflake via Kafka for real-time monitoring.",
-        "Reducing kiosk deployment times by 80% by pioneering fleet management pub-sub operation code mechanism over RESTful API with reviewed, simplified action desired state in JSON.",
+        "Eliminated manual cloud change errors and version drift by architecting immutable infrastructure-as-code (IaC) via Terraform, automating CI/CD pipelines to ensure environmental parity.",
+        "Aggregated real-time transaction telemetry and kiosk states into streamed source Snowflake using Kafka, establishing centralized observability and proactive monitoring across kiosk fleet and financial instruments.",
+        "Reduced kiosk deployment times by 80% by pioneering extensible fleet management asynchronous pub-sub operation code SQS-SNS mechanism over RESTful API with reviewed, simplified action desired state in JSON.",
     ]
 
     add_page_break()
@@ -271,8 +280,8 @@ def create_resume():
 
     # Capital One 
     c1_sa_bullets = [
-        "Developing ATM fleet managing/monitoring distributed cloud infrastructure serving real-time operations/auditing.",
-        "Building MSI to streamline ATM software platform lifecycle management, reducing per kiosk downtime by 60%.",
+        "Developed ATM fleet managing/monitoring distributed cloud infrastructure serving real-time operations/auditing.",
+        "Built MSI to streamline ATM software platform lifecycle management, reducing per kiosk downtime by 80%.",
     ]
 
     add_job("Software Engineer – Retail Bank Tech, Digital Customer Experience", "July 2019 – July 2021", c1_sa_bullets)
@@ -282,13 +291,13 @@ def create_resume():
     add_job("Software Engineer – Subscription Management and Customer Support Platform", None, bloomberg_bullets)
     
     vs_bullets = [
-        "Optimized DotGov domain management web portal with customer service and GSA user feedback.",
+        "Optimized Java-based DotGov domain management web portal with customer service and GSA user feedback.",
         "Developed internal code dependency analysis reporting tool to analyze and report code security vulnerabilities."
     ]
     add_company_heading("Verisign, Inc.", "February 2017 – August 2018")
     add_job("Software Engineer I-II – Consolidated Top-Level Domain, Infrastructure Services", None, vs_bullets)
     
-    lm_bullets = ["Modernized submarine sonar applications stack integrating scaling and management Mesos/Marathon COTS.", "Introduced Docker containerization for hosting submarine applications."]
+    lm_bullets = ["Modernized legacy submarine sonar stack via Docker and Mesos/Marathon to auto-scale container resources."]
     add_company_heading("Lockheed Martin", "June 2016 – February 2017")
     add_job("Software Engineer Associate – Acoustic Rapid COTS Insertion System Services", None, lm_bullets)
 
@@ -306,7 +315,7 @@ def create_resume():
     # --- SECTION: CERTIFICATIONS --- 
     add_section_heading("CERTIFICATIONS")
     
-    certs = ["AWS Certified Developer Associate and Cloud Practitioner", "AWS Certified Generative AI Developer – Professional and Solutions Architect (scheduled Q3 2026)", "CompTIA Network+ Certification N10-006"]
+    certs = ["AWS Certified Developer Associate and Cloud Practitioner", "AWS Certified Generative AI Developer – Professional and Solutions Architect (expected Q3 2026)", "CompTIA Network+ Certification N10-006"]
     for cert in certs:
         p = doc.add_paragraph(f"•\t {cert}")
         p.paragraph_format.left_indent = Inches(0.2)
