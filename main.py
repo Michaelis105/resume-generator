@@ -49,6 +49,20 @@ def create_resume():
     pf.line_spacing = 1.0
     pf.space_before = pf.space_after = Pt(0)
 
+    def add_communication_header_section():
+        contact_p = doc.add_paragraph()
+        contact_p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+        contact_p.paragraph_format.space_after = Pt(2)
+        contact_run = contact_p.add_run(f"✉ {email}  | ✆ {phone}  | 📍 {location}")
+        contact_run.font.size = Pt(12)
+
+        link_p = doc.add_paragraph()
+        link_p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+        link_p.add_run("</> ")
+        add_hyperlink(link_p, "https://github.com/Michaelis105", "github.com/Michaelis105")
+        link_p.add_run("  | [in] ")
+        add_hyperlink(link_p, "https://linkedin.com/in/louiemichael", "linkedin.com/in/louiemichael")
+
     # Helper: Add hyperlink to a paragraph
     def add_hyperlink(paragraph, url, text):
         # Create a new relationship for the hyperlink
@@ -115,8 +129,208 @@ def create_resume():
         location = data.get('location', '')
         return name, email, phone, location
 
+    def add_summary_section():
+        add_section_heading("SUMMARY")
+        summary_text = "Full-stack lead software engineer with nearly 10 years of developing resilient, distributed, and stable AWS cloud systems in heavily-regulated environments at scale. Proven track record of steering engineering teams and partnering with product/design to influence and build patented self-service banking technology supporting over $20 million in transactions and intelligent fleet management service overseeing 1000s of reliable customer-facing financial devices. Combining deep full-stack expertise with the latest generative AI engineering technologies."
+        summary_p1 = doc.add_paragraph(summary_text)
+        summary_p1.paragraph_format.space_before = Pt(10)
+        summary_p1.paragraph_format.line_spacing = 1.15
+
+    def add_technical_expertise_section():
+         # --- SECTION: TECHNICAL EXPERTISE ---
+        add_section_heading("TECHNICAL EXPERTISE")
+
+        skills = [
+            ("Languages & Core Tech", "Python + Flask, Node.js + Express, Bash, Java + Spring, Typescript"),
+            ("Frontend", "React, Vue, HTML, CSS, JavaScript, Electron"),
+            ("Cloud & Infrastructure", "Amazon Web Services (AWS), Unix, Linux, Docker, Container, Terraform, Git, GitHub"),
+            ("Data Engineering", "SQL relational, NoSQL non-relational, MySQL, PostgreSQL, Snowflake, Kafka, Modeling"),
+            ("Observability/SRE", "Splunk, New Relic, Cloudwatch, PagerDuty, Playbooks, Technical Documentation"),
+            ("Unit, Acceptance, Contract Testing", "Jest, Cypress, Cucumber"),
+            ("Architecture/System Design", "RESTful API, Distributed Systems, Event-Driven, Real-time, Microservices"),
+            ("Leadership/Team Management", "Agile, Scrum, Cross-functional Team Coordination, Presentations"),
+            ("Growth", "Patent Process, Root-cause-analysis, Post-Mortems, Mentoring, Hackathons, Interviewing"),
+            ("Generative AI Engineering", "Ollama, LangChain, ChromaDB, Windsurf, Copilot, Gemini"),
+            #("Others", mini_skills),
+        ]
+        for skill in skills:
+            p = doc.add_paragraph()
+            category, items = skill
+            '''
+            if category == "Others":
+                mini_run = p.add_run(f"•\t{category}")
+                mini.paragraph_format.space_before = Pt(0)
+                mini.paragraph_format.space_after = Pt(0)
+                mini_run = mini.add_run(", ".join(mini_skills))
+                mini_run.font.size = Pt(2)  # effectively invisible text for keyword optimization
+                mini_run.font.color.rgb = RGBColor(255, 255, 255)
+                continue
+            '''
+            run = p.add_run(f"•\t{category}")
+            run.bold = True
+            p.add_run(f": {items}")
+            base_indent = 0.35
+            p.paragraph_format.left_indent = Inches(base_indent) 
+            p.paragraph_format.first_line_indent = Inches(-0.15)
+            p.paragraph_format.tab_stops.add_tab_stop(Inches(base_indent))
+            p.paragraph_format.space_before = Pt(4)
+            p.paragraph_format.space_after = Pt(4)
+
+    def add_work_experience_section():
+        add_section_heading("PROFESSIONAL WORK EXPERIENCE")
+
+        # helper to format company line with dates
+        def add_company_heading(company, dates=None):
+            company_p = doc.add_paragraph()
+            company_p.paragraph_format.space_before = Pt(13)
+            company_p.paragraph_format.tab_stops.add_tab_stop(Inches(8.0), WD_TAB_ALIGNMENT.RIGHT)
+            run = company_p.add_run(company)
+            run.bold = True
+            run.font.size = Pt(11)
+            if dates is not None:
+                company_p.add_run(f"\t{dates}")
+            add_section_underline(company_p, color='000000', thickness=1)
+
+        def add_job(title, dates, bullets, level2_range=None):        
+            p2 = doc.add_paragraph()
+            p2.paragraph_format.space_before = Pt(16)
+            p2.paragraph_format.space_after = Pt(12)
+            p2.paragraph_format.tab_stops.add_tab_stop(Inches(8.0), WD_TAB_ALIGNMENT.RIGHT)
+            # separate runs so only job title is italic
+            title_run = p2.add_run(title)
+            title_run.bold = True
+            title_run.font.size = Pt(11)
+            if dates:
+                date_run = p2.add_run(f"\t{dates}")
+                date_run.font.size = Pt(11)    
+            for idx, b in enumerate(bullets):
+                bp = doc.add_paragraph()
+
+                base_indent = 0.25
+                bp.paragraph_format.left_indent = Inches(base_indent) 
+                bp.paragraph_format.tab_stops.add_tab_stop(Inches(base_indent))
+
+                # Handle both plain strings and tuples with formatting
+                if isinstance(b, tuple):
+                    bold_text, is_bold, rest = b
+                    run = bp.add_run(f"•\t")
+                    run = bp.add_run(f"{bold_text}")
+                    run.bold = is_bold
+                    bp.add_run(f" {rest}")
+                else:
+                    bp.add_run(f"•\t{b}")
+
+                bp.paragraph_format.space_before = Pt(3)
+                bp.paragraph_format.space_after = Pt(3)
+
+                # Indenting bullets slightly from the left margin
+                if level2_range and level2_range[0] <= idx <= level2_range[1]:
+                    bp.paragraph_format.left_indent = Inches(0.6) # Deeper nested indent
+                    bp.paragraph_format.first_line_indent = Inches(-0.2)
+                else:
+                    bp.paragraph_format.left_indent = Inches(0.4) # Standard slight indent
+                    bp.paragraph_format.first_line_indent = Inches(-0.2)
+
+        # Capital One 
+        c1_lead_bullets = [
+            "Spearheading nation-wide launch of U.S.-first patented self-service cashier’s check kiosk leveraging AWS Lambda, Node.js + React Electron to orchestrate secure, QR-initiated check issuance from mobile devices.",
+            "Engineering a resilient $20M+ workflow for high-stakes customer cashier’s checks transactions leveraging AWS Lambda to scale real-time AML checking, FIS system of records, and automated reconciliation microservices.",
+            "Avoiding 30% redundant development by architecting a standardized AWS severless React, Node.js, and DynamoDB stack for unified cache state management, transaction processing, and anti-fraud measures.",
+            "Steering engineering excellence for 7-engineer team, systematizing code reviews and testing for increased feature delivery velocity and writing on-call PagerDuty debug playbooks/dashboards to minimize kiosk MTTR.",
+            "Unifying technical vision across product, design, and engineering by crafting high-fidelity dataflow and API contracts, reducing implementation ambiguity and growing development velocity via focused Agile refinements.",
+            "Conceptualizing the green-field architecture of a self-service card issuance kiosk, designing secure AWS serverless workflows to orchestrate real-time EMV chip encoding and payment activation.",
+            "Automating regulatory research using LangChain and ChromaDB to transform unstructured policies into semantically searchable knowledge base tool resulting in reduced manual discovery time.",
+        ]
+
+        add_company_heading("Capital One Financial")
+        add_job("Lead Software Engineer – Bank Tech, Consumer Self-Servicing", "August 2024 – Present", c1_lead_bullets)
+
+        # Capital One 
+        c1_pa_bullets = [
+            "Eliminated manual cloud change errors and version drift by architecting immutable infrastructure-as-code (IaC) via Terraform, automating CI/CD pipelines to ensure environmental parity.",
+            "Aggregated real-time transaction telemetry and kiosk states into streamed source Snowflake using Kafka, establishing centralized observability and proactive monitoring across kiosk fleet and financial instruments.",
+            "Reduced kiosk deployment times by 80% by pioneering extensible fleet management asynchronous pub-sub operation code SQS-SNS mechanism over RESTful API with reviewed, simplified action desired state in JSON.",
+        ]
+
+        add_page_break()
+
+        add_job("Senior Software Engineer – Bank Tech, Associate In-Person Experience", "July 2021 – August 2024", c1_pa_bullets)
+
+        # Capital One 
+        c1_sa_bullets = [
+            "Developed ATM fleet managing/monitoring distributed cloud infrastructure serving real-time operations/auditing.",
+            "Built MSI to streamline ATM software platform lifecycle management, reducing per kiosk downtime by 80%.",
+        ]
+
+        add_job("Software Engineer – Retail Bank Tech, Digital Customer Experience", "July 2019 – July 2021", c1_sa_bullets)
+
+        bloomberg_bullets = ["Decreased customer secure access outages by 10% via preemptive SAML certificate expiration notifications.",]
+        add_company_heading("Bloomberg Industry Group", "August 2018 – July 2019")
+        add_job("Software Engineer – Subscription Management and Customer Support Platform", None, bloomberg_bullets)
+        
+        vs_bullets = [
+            "Optimized Java-based DotGov domain management web portal with customer service and GSA user feedback.",
+            "Developed internal code dependency analysis reporting tool to analyze and report code security vulnerabilities."
+        ]
+        add_company_heading("Verisign, Inc.", "February 2017 – August 2018")
+        add_job("Software Engineer I-II – Consolidated Top-Level Domain, Infrastructure Services", None, vs_bullets)
+        
+        lm_bullets = ["Modernized legacy submarine sonar stack via Docker and Mesos/Marathon to auto-scale container resources."]
+        add_company_heading("Lockheed Martin", "June 2016 – February 2017")
+        add_job("Software Engineer Associate – Acoustic Rapid COTS Insertion System Services", None, lm_bullets)
+
+    def add_patents_section():
+        add_section_heading("PATENTS")
+        base_indent = 0.35
+        patents = ["Systems and Methods for Securely Generating and Printing a Document (US20220414641A1)", "Graphical User Interface for Centralized Register Device Management and Monitoring (Notice of Allowance)"]
+        for patent in patents:
+            p = doc.add_paragraph(f"•\t {patent}")
+            p.paragraph_format.left_indent = Inches(0.2)
+            p.paragraph_format.tab_stops.add_tab_stop(Inches(base_indent))
+            p.paragraph_format.space_before = Pt(2)
+            p.paragraph_format.space_after = Pt(2)
+
+    def add_certifications_section():
+        add_section_heading("CERTIFICATIONS")
+        base_indent = 0.35
+        certs = ["AWS Certified Developer Associate and Cloud Practitioner", "AWS Certified Generative AI Developer – Professional and Solutions Architect (expected Q3 2026)", "CompTIA Network+ Certification N10-006"]
+        for cert in certs:
+            p = doc.add_paragraph(f"•\t {cert}")
+            p.paragraph_format.left_indent = Inches(0.2)
+            p.paragraph_format.tab_stops.add_tab_stop(Inches(base_indent))
+            p.paragraph_format.space_before = Pt(2)
+            p.paragraph_format.space_after = Pt(2)
+
+    def add_education_section():
+        add_section_heading("EDUCATION")
+
+        # Georgia Tech 
+        pe1 = doc.add_paragraph()
+        pe1.paragraph_format.space_before = Pt(8)
+        pe1.paragraph_format.tab_stops.add_tab_stop(Inches(8.0), WD_TAB_ALIGNMENT.RIGHT)
+        pe1.add_run("Georgia Institute of Technology").bold = True
+        pe1.add_run("\tMay 2021")
+        pe1_sub = doc.add_paragraph()
+        pe1_sub.paragraph_format.tab_stops.add_tab_stop(Inches(8.0), WD_TAB_ALIGNMENT.RIGHT)
+        pe1_sub.add_run("M.S. in Computer Science (Computing Systems)").italic = True
+        pe1_sub.add_run("\tAtlanta, GA")
+        pe1_sub.paragraph_format.space_after = Pt(4)
+
+        # Virginia Tech 
+        pe2 = doc.add_paragraph()
+        pe2.paragraph_format.space_before = Pt(8)
+        pe2.paragraph_format.tab_stops.add_tab_stop(Inches(8.0), WD_TAB_ALIGNMENT.RIGHT)
+        pe2.add_run("Virginia Polytechnic Institute and State University").bold = True
+        pe2.add_run("\tMay 2016")
+        pe2_sub = doc.add_paragraph()
+        pe2_sub.paragraph_format.tab_stops.add_tab_stop(Inches(8.0), WD_TAB_ALIGNMENT.RIGHT)
+        pe2_sub.add_run("B.S. in Computer Science").italic = True
+        pe2_sub.add_run("\tBlacksburg, VA")
+        pe2_sub.paragraph_format.space_after = Pt(4)
+
     # Load personal info from pii.json (falls back to empty strings on error)
     name, email, phone, location = load_pii()
+
 
     # --- CONDENSED CENTERED HEADER --- 
     name_p = doc.add_paragraph()
@@ -126,18 +340,7 @@ def create_resume():
     name_run.bold = True
     name_run.font.size = Pt(28)
 
-    contact_p = doc.add_paragraph()
-    contact_p.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    contact_p.paragraph_format.space_after = Pt(2)
-    contact_run = contact_p.add_run(f"✉ {email}  | ✆ {phone}  | 📍 {location}")
-    contact_run.font.size = Pt(12)
-
-    link_p = doc.add_paragraph()
-    link_p.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    link_p.add_run("</> ")
-    add_hyperlink(link_p, "https://github.com/Michaelis105", "github.com/Michaelis105")
-    link_p.add_run("  | [in] ")
-    add_hyperlink(link_p, "https://linkedin.com/in/louiemichael", "linkedin.com/in/louiemichael")
+    add_communication_header_section()
 
     def add_page_break():
         page_break = doc.add_paragraph("")
@@ -152,203 +355,22 @@ def create_resume():
         add_section_underline(sec)
  
     # --- SECTION: SUMMARY ---
-    add_section_heading("SUMMARY")
+    add_summary_section()
 
-    summary_text = "Full-stack lead software engineer with nearly 10 years of developing resilient, distributed, and stable AWS cloud systems in heavily-regulated environments at scale. Proven track record of steering engineering teams and partnering with product/design to influence and build patented self-service banking technology supporting over $20 million in transactions and intelligent fleet management service overseeing 1000s of reliable customer-facing financial devices. Combining deep full-stack expertise with the latest generative AI engineering technologies."
-    summary_p1 = doc.add_paragraph(summary_text)
-    summary_p1.paragraph_format.space_before = Pt(10)
-    summary_p1.paragraph_format.line_spacing = 1.15
-
-     # --- SECTION: TECHNICAL EXPERTISE ---
-    add_section_heading("TECHNICAL EXPERTISE")
-
-    skills = [
-        ("Languages & Core Tech", "Python + Flask, Node.js + Express, Bash, Java + Spring, Typescript"),
-        ("Frontend", "React, Vue, HTML, CSS, JavaScript, Electron"),
-        ("Cloud & Infrastructure", "Amazon Web Services (AWS), Unix, Linux, Docker, Container, Terraform, Git, GitHub"),
-        ("Data Engineering", "SQL relational, NoSQL non-relational, MySQL, PostgreSQL, Snowflake, Kafka, Modeling"),
-        ("Observability/SRE", "Splunk, New Relic, Cloudwatch, PagerDuty, Playbooks, Technical Documentation"),
-        ("Unit, Acceptance, Contract Testing", "Jest, Cypress, Cucumber"),
-        ("Architecture/System Design", "RESTful API, Distributed Systems, Event-Driven, Real-time, Microservices"),
-        ("Leadership/Team Management", "Agile, Scrum, Cross-functional Team Coordination, Presentations"),
-        ("Growth", "Patent Process, Root-cause-analysis, Post-Mortems, Mentoring, Hackathons, Interviewing"),
-        ("Generative AI Engineering", "Ollama, LangChain, ChromaDB, Windsurf, Copilot, Gemini"),
-        #("Others", mini_skills),
-    ]
-    for skill in skills:
-        p = doc.add_paragraph()
-        category, items = skill
-        '''
-        if category == "Others":
-            mini_run = p.add_run(f"•\t{category}")
-            mini.paragraph_format.space_before = Pt(0)
-            mini.paragraph_format.space_after = Pt(0)
-            mini_run = mini.add_run(", ".join(mini_skills))
-            mini_run.font.size = Pt(2)  # effectively invisible text for keyword optimization
-            mini_run.font.color.rgb = RGBColor(255, 255, 255)
-            continue
-        '''
-        run = p.add_run(f"•\t{category}")
-        run.bold = True
-        p.add_run(f": {items}")
-        base_indent = 0.35
-        p.paragraph_format.left_indent = Inches(base_indent) 
-        p.paragraph_format.first_line_indent = Inches(-0.15)
-        p.paragraph_format.tab_stops.add_tab_stop(Inches(base_indent))
-        p.paragraph_format.space_before = Pt(4)
-        p.paragraph_format.space_after = Pt(4)
+    # --- SECTION: TECHNICAL EXPERTISE ---
+    add_technical_expertise_section()
     
     # --- SECTION: PROFESSIONAL WORK EXPERIENCE ---
-    add_section_heading("PROFESSIONAL WORK EXPERIENCE")
-
-    # helper to format company line with dates
-    def add_company_heading(company, dates=None):
-        company_p = doc.add_paragraph()
-        company_p.paragraph_format.space_before = Pt(13)
-        company_p.paragraph_format.tab_stops.add_tab_stop(Inches(8.0), WD_TAB_ALIGNMENT.RIGHT)
-        run = company_p.add_run(company)
-        run.bold = True
-        run.font.size = Pt(11)
-        if dates is not None:
-            company_p.add_run(f"\t{dates}")
-        add_section_underline(company_p, color='000000', thickness=1)
-
-    def add_job(title, dates, bullets, level2_range=None):        
-        p2 = doc.add_paragraph()
-        p2.paragraph_format.space_before = Pt(16)
-        p2.paragraph_format.space_after = Pt(12)
-        p2.paragraph_format.tab_stops.add_tab_stop(Inches(8.0), WD_TAB_ALIGNMENT.RIGHT)
-        # separate runs so only job title is italic
-        title_run = p2.add_run(title)
-        title_run.bold = True
-        title_run.font.size = Pt(11)
-        if dates:
-            date_run = p2.add_run(f"\t{dates}")
-            date_run.font.size = Pt(11)    
-        for idx, b in enumerate(bullets):
-            bp = doc.add_paragraph()
-
-            base_indent = 0.25
-            bp.paragraph_format.left_indent = Inches(base_indent) 
-            bp.paragraph_format.tab_stops.add_tab_stop(Inches(base_indent))
-
-            # Handle both plain strings and tuples with formatting
-            if isinstance(b, tuple):
-                bold_text, is_bold, rest = b
-                run = bp.add_run(f"•\t")
-                run = bp.add_run(f"{bold_text}")
-                run.bold = is_bold
-                bp.add_run(f" {rest}")
-            else:
-                bp.add_run(f"•\t{b}")
-
-            bp.paragraph_format.space_before = Pt(3)
-            bp.paragraph_format.space_after = Pt(3)
-
-            # Indenting bullets slightly from the left margin
-            if level2_range and level2_range[0] <= idx <= level2_range[1]:
-                bp.paragraph_format.left_indent = Inches(0.6) # Deeper nested indent
-                bp.paragraph_format.first_line_indent = Inches(-0.2)
-            else:
-                bp.paragraph_format.left_indent = Inches(0.4) # Standard slight indent
-                bp.paragraph_format.first_line_indent = Inches(-0.2)
-
-    # Capital One 
-    c1_lead_bullets = [
-        "Spearheading nation-wide launch of U.S.-first patented self-service cashier’s check kiosk leveraging AWS Lambda, Node.js + React Electron to orchestrate secure, QR-initiated check issuance from mobile devices.",
-        "Engineering a resilient $20M+ workflow for high-stakes customer cashier’s checks transactions leveraging AWS Lambda to scale real-time AML checking, FIS system of records, and automated reconciliation microservices.",
-        "Avoiding 30% redundant development by architecting a standardized AWS severless React, Node.js, and DynamoDB stack for unified cache state management, transaction processing, and anti-fraud measures.",
-        "Steering engineering excellence for 7-engineer team, systematizing code reviews and testing for increased feature delivery velocity and writing on-call PagerDuty debug playbooks/dashboards to minimize kiosk MTTR.",
-        "Unifying technical vision across product, design, and engineering by crafting high-fidelity dataflow and API contracts, reducing implementation ambiguity and growing development velocity via focused Agile refinements.",
-        "Conceptualizing the green-field architecture of a self-service card issuance kiosk, designing secure AWS serverless workflows to orchestrate real-time EMV chip encoding and payment activation.",
-        "Automating regulatory research using LangChain and ChromaDB to transform unstructured policies into semantically searchable knowledge base tool resulting in reduced manual discovery time.",
-    ]
-
-    add_company_heading("Capital One Financial")
-    add_job("Lead Software Engineer – Bank Tech, Consumer Self-Servicing", "August 2024 – Present", c1_lead_bullets)
-
-    # Capital One 
-    c1_pa_bullets = [
-        "Eliminated manual cloud change errors and version drift by architecting immutable infrastructure-as-code (IaC) via Terraform, automating CI/CD pipelines to ensure environmental parity.",
-        "Aggregated real-time transaction telemetry and kiosk states into streamed source Snowflake using Kafka, establishing centralized observability and proactive monitoring across kiosk fleet and financial instruments.",
-        "Reduced kiosk deployment times by 80% by pioneering extensible fleet management asynchronous pub-sub operation code SQS-SNS mechanism over RESTful API with reviewed, simplified action desired state in JSON.",
-    ]
-
-    add_page_break()
-
-    add_job("Senior Software Engineer – Bank Tech, Associate In-Person Experience", "July 2021 – August 2024", c1_pa_bullets)
-
-    # Capital One 
-    c1_sa_bullets = [
-        "Developed ATM fleet managing/monitoring distributed cloud infrastructure serving real-time operations/auditing.",
-        "Built MSI to streamline ATM software platform lifecycle management, reducing per kiosk downtime by 80%.",
-    ]
-
-    add_job("Software Engineer – Retail Bank Tech, Digital Customer Experience", "July 2019 – July 2021", c1_sa_bullets)
-
-    bloomberg_bullets = ["Decreased customer secure access outages by 10% via preemptive SAML certificate expiration notifications.",]
-    add_company_heading("Bloomberg Industry Group", "August 2018 – July 2019")
-    add_job("Software Engineer – Subscription Management and Customer Support Platform", None, bloomberg_bullets)
-    
-    vs_bullets = [
-        "Optimized Java-based DotGov domain management web portal with customer service and GSA user feedback.",
-        "Developed internal code dependency analysis reporting tool to analyze and report code security vulnerabilities."
-    ]
-    add_company_heading("Verisign, Inc.", "February 2017 – August 2018")
-    add_job("Software Engineer I-II – Consolidated Top-Level Domain, Infrastructure Services", None, vs_bullets)
-    
-    lm_bullets = ["Modernized legacy submarine sonar stack via Docker and Mesos/Marathon to auto-scale container resources."]
-    add_company_heading("Lockheed Martin", "June 2016 – February 2017")
-    add_job("Software Engineer Associate – Acoustic Rapid COTS Insertion System Services", None, lm_bullets)
+    add_work_experience_section()
 
     # --- SECTION: PATENTS --- 
-    add_section_heading("PATENTS")
-    
-    patents = ["Systems and Methods for Securely Generating and Printing a Document (US20220414641A1)", "Graphical User Interface for Centralized Register Device Management and Monitoring (Notice of Allowance)"]
-    for patent in patents:
-        p = doc.add_paragraph(f"•\t {patent}")
-        p.paragraph_format.left_indent = Inches(0.2)
-        p.paragraph_format.tab_stops.add_tab_stop(Inches(base_indent))
-        p.paragraph_format.space_before = Pt(2)
-        p.paragraph_format.space_after = Pt(2)
+    add_patents_section()
 
     # --- SECTION: CERTIFICATIONS --- 
-    add_section_heading("CERTIFICATIONS")
-    
-    certs = ["AWS Certified Developer Associate and Cloud Practitioner", "AWS Certified Generative AI Developer – Professional and Solutions Architect (expected Q3 2026)", "CompTIA Network+ Certification N10-006"]
-    for cert in certs:
-        p = doc.add_paragraph(f"•\t {cert}")
-        p.paragraph_format.left_indent = Inches(0.2)
-        p.paragraph_format.tab_stops.add_tab_stop(Inches(base_indent))
-        p.paragraph_format.space_before = Pt(2)
-        p.paragraph_format.space_after = Pt(2)
+    add_certifications_section()
 
     # --- SECTION: EDUCATION --- 
-    add_section_heading("EDUCATION")
-
-    # Georgia Tech 
-    pe1 = doc.add_paragraph()
-    pe1.paragraph_format.space_before = Pt(8)
-    pe1.paragraph_format.tab_stops.add_tab_stop(Inches(8.0), WD_TAB_ALIGNMENT.RIGHT)
-    pe1.add_run("Georgia Institute of Technology").bold = True
-    pe1.add_run("\tMay 2021")
-    pe1_sub = doc.add_paragraph()
-    pe1_sub.paragraph_format.tab_stops.add_tab_stop(Inches(8.0), WD_TAB_ALIGNMENT.RIGHT)
-    pe1_sub.add_run("M.S. in Computer Science (Computing Systems)").italic = True
-    pe1_sub.add_run("\tAtlanta, GA")
-    pe1_sub.paragraph_format.space_after = Pt(4)
-
-    # Virginia Tech 
-    pe2 = doc.add_paragraph()
-    pe2.paragraph_format.space_before = Pt(8)
-    pe2.paragraph_format.tab_stops.add_tab_stop(Inches(8.0), WD_TAB_ALIGNMENT.RIGHT)
-    pe2.add_run("Virginia Polytechnic Institute and State University").bold = True
-    pe2.add_run("\tMay 2016")
-    pe2_sub = doc.add_paragraph()
-    pe2_sub.paragraph_format.tab_stops.add_tab_stop(Inches(8.0), WD_TAB_ALIGNMENT.RIGHT)
-    pe2_sub.add_run("B.S. in Computer Science").italic = True
-    pe2_sub.add_run("\tBlacksburg, VA")
-    pe2_sub.paragraph_format.space_after = Pt(4)
+    add_education_section()
 
     doc.save('michael-louie-resume.docx')
 
