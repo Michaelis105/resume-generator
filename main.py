@@ -131,9 +131,9 @@ def create_resume():
 
     def add_summary_section():
         add_section_heading("SUMMARY")
-        summary_text = "Full-stack lead software engineer with nearly 10 years of developing resilient, distributed, and stable AWS cloud systems in heavily-regulated environments at scale. " \
-        "Proven track record of steering engineering teams and partnering with product/design to influence and build patented self-service banking technology supporting over $20 million in transactions and intelligent fleet management service overseeing 1000s of reliable customer-facing financial devices. " \
-        "Combining deep full-stack expertise with the latest generative AI engineering technologies."
+        summary_text = "Lead software engineer with 10 years of experience developing heavily-regulated, enterprise-scale AWS systems — " \
+        "holding patents on self-service banking kiosk supporting $20M+ in transactions and fleet management service for thousands of automated teller machines. " \
+        "Applying generative AI tech to cut customer/associate research time by 40%."
         summary_p1 = doc.add_paragraph(summary_text)
         summary_p1.paragraph_format.space_before = Pt(10)
         summary_p1.paragraph_format.line_spacing = 1.15
@@ -145,12 +145,12 @@ def create_resume():
         skills = [
             ("Languages & Core Tech", "Python + Flask, Node.js + Express, Bash, Java + Spring, Typescript"),
             ("Frontend", "React, Vue, HTML, CSS, JavaScript, Electron"),
-            ("Cloud & Infrastructure", "Amazon Web Services (AWS), Unix, Linux, Docker, Container, Terraform, Git, GitHub"),
-            ("Data Engineering", "SQL relational, NoSQL non-relational, MySQL, PostgreSQL, Snowflake, Kafka, Modeling"),
-            ("Observability/SRE", "Splunk, New Relic, Cloudwatch, PagerDuty, Playbooks, Technical Documentation"),
+            ("Cloud & Infrastructure", "Amazon Web Services (AWS), Linux, Docker, Terraform, Git"),
+            ("Data Engineering", "SQL (relational), NoSQL (non-relational), MySQL, PostgreSQL, Snowflake, Kafka"),
+            ("Observability/SRE", "Splunk, New Relic, Cloudwatch, PagerDuty"),
             ("Unit, Acceptance, Contract Testing", "Jest, Cypress, Cucumber"),
-            ("Architecture/System Design", "RESTful API, Distributed Systems, Event-Driven, Real-time, Microservices"),
-            ("Leadership/Team Management", "Agile, Scrum, Cross-functional Team Coordination, Presentations"),
+            ("Architecture/System Design", "RESTful API, Distributed Systems, Event-Driven, Microservices"),
+            ("Leadership", "Agile, Cross-functional Collaboration, Mentorship, Technical Interviewing"),
             #("Growth", "Patent Process, Root-cause-analysis, Post-Mortems, Mentoring, Hackathons, Interviewing"),
             ("Generative AI Engineering", "Ollama, LangChain, ChromaDB, Windsurf, Copilot, Gemini"),
             #("Others", mini_skills),
@@ -235,12 +235,12 @@ def create_resume():
 
         # Capital One 
         c1_lead_bullets = [
-            "Spearheading nation-wide launch of U.S.-first patented self-service cashier’s check kiosk leveraging AWS Lambda, Node.js + React Electron to orchestrate secure, QR-initiated check issuance from mobile devices.",
-            "Engineering a resilient $20M+ workflow for high-stakes customer cashier’s check transactions leveraging AWS Lambda to scale real-time AML checking, FIS system of records, and automated reconciliation microservices.",
+            "Spearheading nation-wide launch of U.S.-first patented self-service cashier’s check kiosk utilizing AWS Lambda, Node.js + React Electron middleware to orchestrate secure, QR-initiated check issuance from mobile devices.",
+            "Engineering a resilient $20M+ workflow for high-stakes customer cashier’s check transactions leveraging Lambda to scale real-time AML checking, FIS system of records, and automated reconciliation microservices.",
             "Steering engineering excellence for 7-engineer team, systematizing code reviews and testing for increased feature delivery velocity and writing on-call PagerDuty debug playbooks/dashboards/RCA to lower kiosk MTTR.",
-            "Unifying technical vision across product, design, and engineering by crafting high-fidelity dataflow and API contracts, reducing implementation ambiguity and growing development velocity via focused Agile refinements.",
-            "Conceptualizing the green-field architecture of a self-service card issuance kiosk, designing secure AWS serverless workflows to orchestrate real-time EMV chip encoding and payment activation.",
-            "Automating regulatory research using LangChain and ChromaDB to transform unstructured policies into semantically searchable knowledge base tool resulting in reduced manual discovery time.",
+            "Unifying technical vision across product and engineering by crafting high-fidelity dataflow and API contracts, reducing implementation ambiguity and growing development velocity via cross-functional refinements.",
+            "Conceptualizing the green-field architecture of a self-service card issuance kiosk, designing secure AWS serverless workflows and data modeling to orchestrate real-time EMV chip encoding and payment activation.",
+            "Automating regulatory research using LangChain and ChromaDB to transform unstructured policies into semantically searchable knowledge base tool reducing manual discovery time by 40%.",
         ]
 
         add_company_heading("Capital One Financial")
@@ -248,12 +248,13 @@ def create_resume():
 
         # Capital One 
         c1_pa_bullets = [
-            "Avoiding 30% redundant development by architecting a standardized AWS severless React, Node.js, and DynamoDB stack for unified cache state management, transaction processing, and anti-fraud measures.",
+            "Avoided 30% redundant development by standardizing AWS serverless React, Node.js, and DynamoDB stack for unified ElastiCache Redis cache state management, transaction processing, and anti-fraud measures.",
             "Eliminated manual cloud change errors and version drift by architecting immutable infrastructure-as-code (IaC) via Terraform, automating CI/CD pipelines to ensure environmental parity.",
             "Aggregated real-time transaction telemetry and kiosk states into streamed source Snowflake using Kafka, establishing centralized observability and proactive monitoring across kiosk fleet and financial instruments.",
             "Reduced kiosk deployment times by 80% by pioneering extensible fleet management asynchronous pub-sub operation code SQS-SNS mechanism over RESTful API with reviewed, simplified action desired state in JSON.",
-            "Mentored three junior software engineers via knowledge-sharing resulting in two promotions.",
-            "Refined software engineering hiring standard via coding and system architectural design interviewing.",
+            "Cleared low check stock failure risks via automated Lambda cron and ServiceNow backoffice supplies ordering.",
+            "Mentored junior engineers via structured knowledge-sharing, code reviews, and simplified technical documentation, resulting in two promotions.",
+            "Refined software engineering hiring standards via coding and system architectural design interviewing.",
         ]
 
         add_job("Senior Software Engineer – Bank Tech, Associate In-Person Experience", "July 2021 – August 2024", c1_pa_bullets)
@@ -266,7 +267,12 @@ def create_resume():
 
         add_job("Software Engineer – Retail Bank Tech, Digital Customer Experience", "July 2019 – July 2021", c1_sa_bullets)
 
-        bloomberg_bullets = ["Decreased customer secure access outages by 10% via preemptive SAML certificate expiration notifications.",]
+        #add_page_break()
+
+        bloomberg_bullets = [
+            "Decreased customer secure access outages by 10% via preemptive SAML certificate expiration notifications.",
+            "Reduced user login time in Vue frontend by 20% removing redundant PostgreSQL queries and business logic."
+        ]
         add_company_heading("Bloomberg Industry Group", "August 2018 – July 2019")
         add_job("Software Engineer – Subscription Management and Customer Support Platform", None, bloomberg_bullets)
         
@@ -277,7 +283,7 @@ def create_resume():
         add_company_heading("Verisign, Inc.", "February 2017 – August 2018")
         add_job("Software Engineer I-II – Consolidated Top-Level Domain, Infrastructure Services", None, vs_bullets)
         
-        lm_bullets = ["Modernized legacy submarine sonar stack via Docker and Mesos/Marathon to auto-scale container resources."]
+        lm_bullets = ["Containerized legacy submarine sonar stack with auto-scaling via Docker and Mesos/Marathon."]
         add_company_heading("Lockheed Martin", "June 2016 – February 2017")
         add_job("Software Engineer Associate – Acoustic Rapid COTS Insertion System Services", None, lm_bullets)
 
@@ -295,9 +301,8 @@ def create_resume():
     def add_certifications_section():
         add_section_heading("CERTIFICATIONS")
         base_indent = 0.35
-        certs = ["AWS Certified Developer Associate and Cloud Practitioner", 
-                 #"AWS Certified Generative AI Developer – Professional and Solutions Architect (expected Q3 2026)",
-                  "CompTIA Network+ Certification N10-006"]
+        certs = ["AWS Certified Developer, Cloud Practitioner, Solutions Architect (Exp. Q3), Generative AI Developer (Exp. Q3)", 
+                  "CompTIA Network+"]
         for cert in certs:
             p = doc.add_paragraph(f"•\t {cert}")
             p.paragraph_format.left_indent = Inches(0.2)
@@ -334,7 +339,6 @@ def create_resume():
 
     # Load personal info from pii.json (falls back to empty strings on error)
     name, email, phone, location = load_pii()
-
 
     # --- CONDENSED CENTERED HEADER --- 
     name_p = doc.add_paragraph()
