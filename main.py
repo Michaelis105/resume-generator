@@ -61,7 +61,7 @@ def create_resume():
         link_p.add_run("</> ")
         add_hyperlink(link_p, "https://github.com/Michaelis105", "github.com/Michaelis105")
         link_p.add_run("  | [in] ")
-        add_hyperlink(link_p, "https://linkedin.com/in/louiemichael", "linkedin.com/in/louiemichael")
+        add_hyperlink(link_p, "https://www.linkedin.com/in/louiemichael/", "linkedin.com/in/louiemichael")
 
     # Helper: Add hyperlink to a paragraph
     def add_hyperlink(paragraph, url, text):
