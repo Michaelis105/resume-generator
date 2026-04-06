@@ -244,7 +244,7 @@ def create_resume():
         ]
 
         add_company_heading("Capital One Financial")
-        add_job("Lead Software Engineer – Bank Tech, Consumer Self-Servicing", "August 2024 – Present", c1_lead_bullets)
+        add_job("Lead Software Engineer – Bank Tech, Consumer Self-Servicing", "August 2024 – April 2026", c1_lead_bullets)
 
         # Capital One 
         c1_pa_bullets = [
