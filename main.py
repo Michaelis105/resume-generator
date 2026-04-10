@@ -235,7 +235,7 @@ def create_resume():
 
         # Capital One 
         c1_lead_bullets = [
-            "Spearheading nation-wide launch of U.S.-first patented self-service cashier’s check kiosk utilizing AWS Lambda, Node.js + React Electron middleware to orchestrate secure, QR-initiated check issuance from mobile devices.",
+            "Spearheading nation-wide launch of U.S.-first patented self-service cashier’s check kiosk on Linux utilizing Node.js + React Electron middleware to orchestrate secure, QR-initiated check issuance from mobile devices.",
             "Engineering a resilient $20M+ workflow for high-stakes customer cashier’s check transactions leveraging Lambda to scale real-time AML checking, FIS system of records, and automated reconciliation microservices.",
             "Steering engineering excellence for 7-engineer team, systematizing code reviews and testing for increased feature delivery velocity and writing on-call PagerDuty debug playbooks/dashboards/RCA to lower kiosk MTTR.",
             "Unifying technical vision across product and engineering by crafting high-fidelity dataflow and API contracts, reducing implementation ambiguity and growing development velocity via cross-functional refinements.",
