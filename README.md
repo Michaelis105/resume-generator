@@ -10,3 +10,7 @@ This resume-as-code contains all the standard resume content while adhering to:
 - Format, styling, and arrangement per professional resume writer feedback.
 
 This ensures a theoretically easier reading for a recruiter and hiring manager while optimized for correct ATS parsing reading from top-bottom and left-right.
+
+# Setup
+
+pip install python-docx
