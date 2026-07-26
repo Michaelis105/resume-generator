@@ -49,18 +49,23 @@ def create_resume():
     pf.line_spacing = 1.0
     pf.space_before = pf.space_after = Pt(0)
 
-    def add_communication_header_section():
+    def add_communication_header_section(clearance):
         contact_p = doc.add_paragraph()
         contact_p.alignment = WD_ALIGN_PARAGRAPH.LEFT
         contact_p.paragraph_format.space_after = Pt(2)
-        contact_run = contact_p.add_run(f"✉ {email}  | ✆ {phone}  | 📍 {location}")
+        contact_run = contact_p.add_run(f"{email}  |  {phone}  |  {location}") # ✉✆📍
         contact_run.font.size = Pt(12)
 
         link_p = doc.add_paragraph()
         link_p.alignment = WD_ALIGN_PARAGRAPH.LEFT
-        link_p.add_run("</> ")
+        if clearance:
+            clearance_run = link_p.add_run(clearance) # 🛡️
+            clearance_run.bold = True
+            link_p.add_run("  |  ")
+        else:
+            link_p.add_run(" ") # </>
         add_hyperlink(link_p, "https://github.com/Michaelis105", "github.com/Michaelis105")
-        link_p.add_run("  | [in] ")
+        link_p.add_run("  |  ") # [in]
         add_hyperlink(link_p, "https://www.linkedin.com/in/louiemichael/", "linkedin.com/in/louiemichael")
 
     # Helper: Add hyperlink to a paragraph
@@ -127,13 +132,13 @@ def create_resume():
         email = data.get('email', '')
         phone = data.get('phone', '')
         location = data.get('location', '')
-        return name, email, phone, location
+        clearance = data.get('clearance', '')
+        return name, email, phone, location, clearance
 
     def add_summary_section():
         add_section_heading("SUMMARY")
         summary_text = "Lead software engineer with 10 years of experience developing heavily-regulated, enterprise-scale AWS systems — " \
-        "holding patents on self-service banking kiosk supporting $20M+ in transactions and fleet management service for thousands of automated teller machines. " \
-        "Applying generative AI tech to cut customer/associate research time by 40%."
+        "holding patents on self-service banking kiosk supporting $20M+ in transactions and fleet management service for thousands of automated teller machines. "
         summary_p1 = doc.add_paragraph(summary_text)
         summary_p1.paragraph_format.space_before = Pt(10)
         summary_p1.paragraph_format.line_spacing = 1.15
@@ -146,13 +151,13 @@ def create_resume():
             ("Languages & Core Tech", "Python + Flask, Node.js + Express, Bash, Java + Spring, Typescript"),
             ("Frontend", "React, Vue, HTML, CSS, JavaScript, Electron"),
             ("Cloud & Infrastructure", "Amazon Web Services (AWS), Linux, Docker, Terraform, Git"),
-            ("Data Engineering", "SQL (relational), NoSQL (non-relational), MySQL, PostgreSQL, Snowflake, Kafka"),
+            ("Data Engineering", "SQL (relational), NoSQL (non-relational), MySQL, PostgreSQL, Snowflake"), # Kafka
             ("Observability/SRE", "Splunk, New Relic, Cloudwatch, PagerDuty"),
             ("Unit, Acceptance, Contract Testing", "Jest, Cypress, Cucumber"),
             ("Architecture/System Design", "RESTful API, Distributed Systems, Event-Driven, Microservices"),
             ("Leadership", "Agile, Cross-functional Collaboration, Mentorship, Technical Interviewing"),
             #("Growth", "Patent Process, Root-cause-analysis, Post-Mortems, Mentoring, Hackathons, Interviewing"),
-            ("Generative AI Engineering", "Ollama, LangChain, ChromaDB, Windsurf, Copilot, Gemini"),
+            ("Generative AI Engineering", "Ollama, LangChain, ChromaDB, Copilot, Gemini"), # Windsurf
             #("Others", mini_skills),
         ]
         for skill in skills:
@@ -233,6 +238,22 @@ def create_resume():
                     bp.paragraph_format.left_indent = Inches(0.4) # Standard slight indent
                     bp.paragraph_format.first_line_indent = Inches(-0.2)
 
+        # Workday Government, LLC 
+        workday_bullets = [
+            "Leading human capital management rearchitecture and modernization mission for federal government agency.",
+            "Collaborating with product managers and QA engineers to develop and maintain robust, complex, secure enterprise system for +10k government employees.",
+            "Championing agile culture for software engineering team from ground up.",
+        ]
+
+        '''
+        Design & Architecture: Lead the design and development of scalable, metadata-driven business applications within a secure, cloud-native SaaS environment, ensuring high performance and maintainability.
+        Engineering Excellence: Develop and maintain robust object-oriented code, utilizing strong design patterns to prioritize usability, configurability, and performance in complex enterprise systems.
+        Collaboration & Mentorship: Collaborate with Product Managers and QA Engineers on functional design and requirement analysis, while fostering professional growth by mentoring junior engineers through pair programming and technical guidance.  Issue Resolution: Troubleshoot and resolve complex, customer-reported issues within high-stakes federal environments, maintaining rigorous standards for code quality and operational reliability.  
+        '''
+
+        add_company_heading("Workday Government, LLC")
+        add_job("Senior Software Development Engineer", "July 2026 – Present", workday_bullets)
+
         # Capital One 
         c1_lead_bullets = [
             "Spearheading nation-wide launch of U.S.-first patented self-service cashier’s check kiosk on Linux utilizing Node.js + React Electron middleware to orchestrate secure, QR-initiated check issuance from mobile devices.",
@@ -240,18 +261,18 @@ def create_resume():
             "Steering engineering excellence for 7-engineer team, systematizing code reviews and testing for increased feature delivery velocity and writing on-call PagerDuty debug playbooks/dashboards/RCA to lower kiosk MTTR.",
             "Unifying technical vision across product and engineering by crafting high-fidelity dataflow and API contracts, reducing implementation ambiguity and growing development velocity via cross-functional refinements.",
             "Conceptualizing the green-field architecture of a self-service card issuance kiosk, designing secure AWS serverless workflows and data modeling to orchestrate real-time EMV chip encoding and payment activation.",
-            "Automating regulatory research using LangChain and ChromaDB to transform unstructured policies into semantically searchable knowledge base tool reducing manual discovery time by 40%.",
+            # "Automating regulatory research using LangChain and ChromaDB to transform unstructured policies into semantically searchable knowledge base tool reducing manual discovery time by 40%.",
         ]
 
-        add_company_heading("Capital One Financial")
+        add_company_heading("Capital One Financial Corporation")
         add_job("Lead Software Engineer – Bank Tech, Consumer Self-Servicing", "August 2024 – April 2026", c1_lead_bullets)
 
         # Capital One 
         c1_pa_bullets = [
             "Avoided 30% redundant development by standardizing AWS serverless React, Node.js, and DynamoDB stack for unified ElastiCache Redis cache state management, transaction processing, and anti-fraud measures.",
-            "Eliminated manual cloud change errors and version drift by architecting immutable infrastructure-as-code (IaC) via Terraform, automating CI/CD pipelines to ensure environmental parity.",
-            "Aggregated real-time transaction telemetry and kiosk states into streamed source Snowflake using Kafka, establishing centralized observability and proactive monitoring across kiosk fleet and financial instruments.",
-            "Reduced kiosk deployment times by 80% by pioneering extensible fleet management asynchronous pub-sub operation code SQS-SNS mechanism over RESTful API with reviewed, simplified action desired state in JSON.",
+            #"Eliminated manual cloud change errors and version drift by architecting immutable infrastructure-as-code (IaC) via Terraform, automating CI/CD pipelines to ensure environmental parity.",
+            "Aggregated real-time transaction telemetry and kiosk states into streamed source Snowflake, establishing centralized observability and proactive monitoring across kiosk fleet and financial instruments.", # using Kafka
+            "Reduced kiosk deployment times by 80% by pioneering extensible fleet management asynchronous pub-sub operation code mechanism over RESTful API with reviewed, simplified action desired state in JSON.", # SQS-SNS
             "Cleared low check stock failure risks via automated Lambda cron and ServiceNow backoffice supplies ordering.",
             "Mentored junior engineers via structured knowledge-sharing, code reviews, and simplified technical documentation, resulting in two promotions.",
             "Refined software engineering hiring standards via coding and system architectural design interviewing.",
@@ -281,11 +302,11 @@ def create_resume():
             "Developed internal code dependency analysis reporting tool to analyze and report code security vulnerabilities."
         ]
         add_company_heading("Verisign, Inc.", "February 2017 – August 2018")
-        add_job("Software Engineer I-II – Consolidated Top-Level Domain, Infrastructure Services", None, vs_bullets)
+        add_job("Software Engineer II – Consolidated Top-Level Domain, Infrastructure Services", None, vs_bullets)
         
-        lm_bullets = ["Containerized legacy submarine sonar stack with auto-scaling via Docker and Mesos/Marathon."]
-        add_company_heading("Lockheed Martin", "June 2016 – February 2017")
-        add_job("Software Engineer Associate – Acoustic Rapid COTS Insertion System Services", None, lm_bullets)
+        #lm_bullets = ["Containerized legacy submarine sonar stack with auto-scaling via Docker and Mesos/Marathon."]
+        #add_company_heading("Lockheed Martin", "June 2016 – February 2017")
+        #add_job("Software Engineer Associate – Acoustic Rapid COTS Insertion System Services", None, lm_bullets)
 
     def add_patents_section():
         add_section_heading("PATENTS")
@@ -301,7 +322,7 @@ def create_resume():
     def add_certifications_section():
         add_section_heading("CERTIFICATIONS")
         base_indent = 0.35
-        certs = ["AWS Certified Developer, Cloud Practitioner, Solutions Architect (Exp. Q3), Generative AI Developer (Exp. Q3)", 
+        certs = ["AWS Certified Developer, Cloud Practitioner, Solutions Architect Associate", # Generative AI Developer (Exp. Q3)
                   "CompTIA Network+"]
         for cert in certs:
             p = doc.add_paragraph(f"•\t {cert}")
@@ -338,7 +359,7 @@ def create_resume():
         pe2_sub.paragraph_format.space_after = Pt(4)
 
     # Load personal info from pii.json (falls back to empty strings on error)
-    name, email, phone, location = load_pii()
+    name, email, phone, location, clearance = load_pii()
 
     # --- CONDENSED CENTERED HEADER --- 
     name_p = doc.add_paragraph()
@@ -348,7 +369,7 @@ def create_resume():
     name_run.bold = True
     name_run.font.size = Pt(28)
 
-    add_communication_header_section()
+    add_communication_header_section(clearance)
 
     def add_page_break():
         page_break = doc.add_paragraph("")
