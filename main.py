@@ -311,7 +311,8 @@ def create_resume():
     def add_patents_section():
         add_section_heading("PATENTS")
         base_indent = 0.35
-        patents = ["Systems and Methods for Securely Generating and Printing a Document (US11636464B2)", "Graphical User Interface for Centralized Register Device Management and Monitoring (Notice of Allowance)"]
+        patents = ["Systems and Methods for Securely Generating and Printing a Document (US11636464B2)", 
+                   "Graphical User Interface for Centralized Register Device Management and Monitoring (US12613610B2)"]
         for patent in patents:
             p = doc.add_paragraph(f"•\t {patent}")
             p.paragraph_format.left_indent = Inches(0.2)
